@@ -1,5 +1,0 @@
-# Don't ignore these important files
-!public/index.html
-!public/manifest.json
-!src/**
-!package.json
