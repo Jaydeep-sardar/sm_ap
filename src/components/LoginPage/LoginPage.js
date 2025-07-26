@@ -50,13 +50,15 @@ const LoginPage = () => {
     e.preventDefault();
     dispatch(loginStart());
     
-    // Simulate API call
+    // Validate credentials
     setTimeout(() => {
-      if (formData.email && formData.password) {
-        dispatch(loginSuccess({ user: { email: formData.email } }));
-        navigate('/dashboard');
-      } else {
+      if (formData.email === "a@admin.com" && formData.password === "Abcd@1234") {
+        dispatch(loginSuccess({ user: { name: "Admin", email: formData.email } }));
+        navigate('/contents');
+      } else if (!formData.email || !formData.password) {
         dispatch(loginFailure('Please fill in all fields'));
+      } else {
+        dispatch(loginFailure('Invalid email or password'));
       }
     }, 1000);
   };
@@ -176,22 +178,37 @@ const LoginPage = () => {
         style={{
           background: `rgba(255, 255, 255, 0.1)`,
           backdropFilter: 'blur(20px)',
-          borderRadius: '24px',
-          padding: '40px',
-          width: '100%',
+          borderRadius: '16px',
+          padding: '25px 20px',
+          width: '90%',
           maxWidth: '450px',
-          minWidth: '320px',
+          minWidth: '280px',
           border: `1px solid rgba(255, 255, 255, 0.2)`,
-          boxShadow: `0 25px 50px rgba(0, 0, 0, 0.25), 0 0 100px ${currentColors.primary}20`,
+          boxShadow: `0 15px 30px rgba(0, 0, 0, 0.25), 0 0 70px ${currentColors.primary}20`,
           position: 'relative',
-          margin: '20px 0',
+          margin: '15px 0',
           boxSizing: 'border-box'
         }}
         variants={cardVariants}
         whileHover={{
-          y: -5,
-          boxShadow: `0 35px 70px rgba(0, 0, 0, 0.3), 0 0 120px ${currentColors.primary}30`,
+          y: -3,
+          boxShadow: `0 25px 50px rgba(0, 0, 0, 0.3), 0 0 100px ${currentColors.primary}30`,
           transition: { duration: 0.3 }
+        }}
+        initial={{
+          borderRadius: '16px',
+          padding: '25px 20px',
+        }}
+        animate={{
+          borderRadius: ['16px', '20px', '24px'],
+          padding: ['25px 20px', '30px 30px', '40px'],
+          transition: {
+            duration: 0.3,
+            delay: 0.2,
+            ease: "easeInOut",
+            when: "beforeChildren",
+            staggerChildren: 0.05
+          }
         }}
       >
         {/* Logo Section */}
@@ -430,15 +447,21 @@ const LoginPage = () => {
                 onChange={handleInputChange}
                 style={{
                   width: '100%',
-                  padding: '16px 50px 16px 16px',
-                  borderRadius: '12px',
+                  padding: '14px 42px 14px 14px',
+                  borderRadius: '10px',
                   border: `2px solid rgba(255, 255, 255, 0.1)`,
                   background: 'rgba(255, 255, 255, 0.05)',
                   color: 'white',
-                  fontSize: '16px',
+                  fontSize: '14px',
                   outline: 'none',
                   transition: 'all 0.3s ease',
                   boxSizing: 'border-box'
+                }}
+                animate={{
+                  padding: ['14px 42px 14px 14px', '16px 50px 16px 16px'],
+                  borderRadius: ['10px', '12px'],
+                  fontSize: ['14px', '16px'],
+                  transition: { duration: 0.3, delay: 0.3 }
                 }}
                 whileFocus={{
                   borderColor: currentColors.primary,
@@ -486,15 +509,21 @@ const LoginPage = () => {
                 onChange={handleInputChange}
                 style={{
                   width: '100%',
-                  padding: '16px 50px 16px 16px',
-                  borderRadius: '12px',
+                  padding: '14px 42px 14px 14px',
+                  borderRadius: '10px',
                   border: `2px solid rgba(255, 255, 255, 0.1)`,
                   background: 'rgba(255, 255, 255, 0.05)',
                   color: 'white',
-                  fontSize: '16px',
+                  fontSize: '14px',
                   outline: 'none',
                   transition: 'all 0.3s ease',
                   boxSizing: 'border-box'
+                }}
+                animate={{
+                  padding: ['14px 42px 14px 14px', '16px 50px 16px 16px'],
+                  borderRadius: ['10px', '12px'],
+                  fontSize: ['14px', '16px'],
+                  transition: { duration: 0.3, delay: 0.35 }
                 }}
                 whileFocus={{
                   borderColor: currentColors.primary,
@@ -552,16 +581,22 @@ const LoginPage = () => {
             disabled={loading}
             style={{
               width: '100%',
-              padding: '16px',
-              borderRadius: '12px',
+              padding: '14px',
+              borderRadius: '10px',
               border: 'none',
               background: currentColors.gradient,
               color: 'white',
-              fontSize: '16px',
+              fontSize: '15px',
               fontWeight: '600',
               cursor: loading ? 'not-allowed' : 'pointer',
               position: 'relative',
               overflow: 'hidden'
+            }}
+            animate={{
+              padding: ['14px', '15px', '16px'],
+              borderRadius: ['10px', '11px', '12px'],
+              fontSize: ['15px', '15.5px', '16px'],
+              transition: { duration: 0.3, delay: 0.4 }
             }}
             whileHover={!loading ? {
               scale: 1.02,
