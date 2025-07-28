@@ -1198,8 +1198,8 @@ const Dashboard = ({ children }) => {
       return children;
     }
     
-    // Check if we're on the main dashboard route
-    if (location.pathname === '/dashboard') {
+    // Check if we're on the main dashboard/home route
+    if (location.pathname === '/dashboard' || location.pathname === '/home') {
       return <Home />;
     }
     
@@ -1292,20 +1292,12 @@ const Dashboard = ({ children }) => {
         
         <NavMenu isOpen={menuOpen}>
           <NavItem 
-            to="/dashboard" 
+            to="/home" 
             theme={currentTheme}
-            className={location.pathname === '/dashboard' ? 'active' : ''}
+            className={location.pathname === '/home' || location.pathname === '/dashboard' ? 'active' : ''}
             onClick={() => setMenuOpen(false)}
           >
             <FiHome /> Home
-          </NavItem>
-          <NavItem 
-            to="/users" 
-            theme={currentTheme}
-            className={location.pathname === '/users' ? 'active' : ''}
-            onClick={() => setMenuOpen(false)}
-          >
-            <FiUsers /> Users
           </NavItem>
           <NavItem 
             to="/genre" 
@@ -1332,44 +1324,12 @@ const Dashboard = ({ children }) => {
             <FiUsers /> Watch-age
           </NavItem>
           <NavItem 
-            to="/slider" 
-            theme={currentTheme}
-            className={location.pathname === '/slider' ? 'active' : ''}
-            onClick={() => setMenuOpen(false)}
-          >
-            <FiImage /> Slider
-          </NavItem>
-          <NavItem 
-            to="/webseries" 
-            theme={currentTheme}
-            className={location.pathname === '/webseries' ? 'active' : ''}
-            onClick={() => setMenuOpen(false)}
-          >
-            <FiFileText /> Webseries
-          </NavItem>
-          <NavItem 
-            to="/movies" 
-            theme={currentTheme}
-            className={location.pathname === '/movies' ? 'active' : ''}
-            onClick={() => setMenuOpen(false)}
-          >
-            <FiFileText /> Movies
-          </NavItem>
-          <NavItem 
             to="/contents" 
             theme={currentTheme}
             className={location.pathname === '/contents' ? 'active' : ''}
             onClick={() => setMenuOpen(false)}
           >
             <FiFileText /> Upload Content
-          </NavItem>
-          <NavItem 
-            to="/trending" 
-            theme={currentTheme}
-            className={location.pathname === '/trending' ? 'active' : ''}
-            onClick={() => setMenuOpen(false)}
-          >
-            <FiBarChart2 /> Trending
           </NavItem>
           <NavItem
             to="/" 

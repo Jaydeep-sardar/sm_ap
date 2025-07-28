@@ -22,6 +22,11 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
         <Route path="/dashboard" element={
           <ProtectedRoute>
             <Dashboard />
@@ -30,11 +35,6 @@ function App() {
         <Route path="/contents" element={
           <ProtectedRoute>
             <Dashboard><ContentForm /></Dashboard>
-          </ProtectedRoute>
-        } />
-        <Route path="/users" element={
-          <ProtectedRoute>
-            <Dashboard><div className="placeholder-content"><h2>Users Page</h2><p>This page is under construction</p></div></Dashboard>
           </ProtectedRoute>
         } />
         <Route path="/genre" element={
@@ -50,26 +50,6 @@ function App() {
         <Route path="/watch-age" element={
           <ProtectedRoute>
             <Dashboard><WatchAge /></Dashboard>
-          </ProtectedRoute>
-        } />
-        <Route path="/slider" element={
-          <ProtectedRoute>
-            <Dashboard><div className="placeholder-content"><h2>Slider Page</h2><p>This page is under construction</p></div></Dashboard>
-          </ProtectedRoute>
-        } />
-        <Route path="/webseries" element={
-          <ProtectedRoute>
-            <Dashboard><div className="placeholder-content"><h2>Webseries Page</h2><p>This page is under construction</p></div></Dashboard>
-          </ProtectedRoute>
-        } />
-        <Route path="/movies" element={
-          <ProtectedRoute>
-            <Dashboard><div className="placeholder-content"><h2>Movies Page</h2><p>This page is under construction</p></div></Dashboard>
-          </ProtectedRoute>
-        } />
-        <Route path="/trending" element={
-          <ProtectedRoute>
-            <Dashboard><div className="placeholder-content"><h2>Trending Page</h2><p>This page is under construction</p></div></Dashboard>
           </ProtectedRoute>
         } />
       </Routes>
