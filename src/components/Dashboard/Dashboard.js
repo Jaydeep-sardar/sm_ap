@@ -11,12 +11,45 @@ import { HiOutlineTag } from 'react-icons/hi';
 
 const DashboardContainer = styled.div`
   min-height: 100vh;
-  background: #e6e6e6;
+  background: ${props => props.theme === 'golden' 
+    ? 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 25%, #fde68a 50%, #f3e8ff 75%, #e0e7ff 100%)'
+    : 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 25%, #a7f3d0 50%, #f0f9ff 75%, #dbeafe 100%)'};
   padding: 0;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
   position: relative;
+  
+  /* Add elegant animated background patterns */
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: ${props => props.theme === 'golden' 
+      ? `
+        radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(255, 165, 0, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 60% 30%, rgba(255, 193, 7, 0.05) 0%, transparent 50%)
+      `
+      : `
+        radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(5, 150, 105, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(4, 120, 87, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 60% 30%, rgba(6, 78, 59, 0.05) 0%, transparent 50%)
+      `};
+    animation: backgroundShift 20s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  
+  @keyframes backgroundShift {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.1); }
+  }
   
   @media (min-width: 768px) {
     flex-direction: row;
@@ -26,15 +59,35 @@ const DashboardContainer = styled.div`
 const Sidebar = styled.div`
   width: 100%;
   background: ${props => props.theme === 'golden' 
-    ? 'linear-gradient(135deg, #FFD700, #FFA500, #FF8C00)' 
-    : 'linear-gradient(135deg, #10B981, #059669, #047857)'};
+    ? 'linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #FF8C00 50%, #DAA520 75%, #B8860B 100%)' 
+    : 'linear-gradient(135deg, #10B981 0%, #059669 25%, #047857 50%, #065f46 75%, #064e3b 100%)'};
   padding: 0;
   height: auto;
   z-index: 100;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: ${props => props.theme === 'golden' 
+    ? '0 4px 20px rgba(255, 165, 0, 0.3), 0 0 40px rgba(255, 215, 0, 0.1)' 
+    : '0 4px 20px rgba(16, 185, 129, 0.3), 0 0 40px rgba(5, 150, 105, 0.1)'};
   position: fixed;
   top: 0;
   left: 0;
+  backdrop-filter: blur(15px);
+  border-right: ${props => props.theme === 'golden' 
+    ? '1px solid rgba(255, 215, 0, 0.2)' 
+    : '1px solid rgba(16, 185, 129, 0.2)'};
+  
+  /* Add subtle glow effect */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: ${props => props.theme === 'golden' 
+      ? 'linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, transparent 100%)' 
+      : 'linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, transparent 100%)'};
+    pointer-events: none;
+  }
   
   @media (min-width: 768px) {
     width: 260px;
@@ -45,16 +98,25 @@ const Sidebar = styled.div`
     
     /* Customize scrollbar */
     &::-webkit-scrollbar {
-      width: 5px;
+      width: 6px;
     }
     
     &::-webkit-scrollbar-track {
       background: rgba(255, 255, 255, 0.1);
+      border-radius: 3px;
     }
     
     &::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3);
+      background: ${props => props.theme === 'golden' 
+        ? 'rgba(255, 215, 0, 0.4)' 
+        : 'rgba(16, 185, 129, 0.4)'};
       border-radius: 3px;
+      
+      &:hover {
+        background: ${props => props.theme === 'golden' 
+          ? 'rgba(255, 215, 0, 0.6)' 
+          : 'rgba(16, 185, 129, 0.6)'};
+      }
     }
   }
 `;
@@ -63,23 +125,52 @@ const Logo = styled.div`
   color: white;
   font-size: 20px;
   font-weight: 800;
-  padding: 15px 20px;
+  padding: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
   background: ${props => props.theme === 'golden' 
-    ? 'rgba(255, 140, 0, 0.2)' 
-    : 'rgba(4, 120, 87, 0.2)'};
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    ? 'linear-gradient(135deg, rgba(255, 140, 0, 0.3) 0%, rgba(218, 165, 32, 0.2) 100%)' 
+    : 'linear-gradient(135deg, rgba(4, 120, 87, 0.3) 0%, rgba(6, 78, 59, 0.2) 100%)'};
+  box-shadow: ${props => props.theme === 'golden' 
+    ? '0 4px 15px rgba(255, 165, 0, 0.2)' 
+    : '0 4px 15px rgba(16, 185, 129, 0.2)'};
   position: relative;
   z-index: 101;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
+  border-bottom: ${props => props.theme === 'golden' 
+    ? '2px solid rgba(255, 215, 0, 0.3)' 
+    : '2px solid rgba(16, 185, 129, 0.3)'};
+  
+  /* Add elegant text shadow */
+  text-shadow: ${props => props.theme === 'golden' 
+    ? '0 2px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 215, 0, 0.3)' 
+    : '0 2px 8px rgba(0, 0, 0, 0.3), 0 0 20px rgba(16, 185, 129, 0.3)'};
+  
+  /* Add subtle animation */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: ${props => props.theme === 'golden' 
+      ? 'linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%)' 
+      : 'linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.1) 50%, transparent 60%)'};
+    animation: shimmer 3s ease-in-out infinite;
+    pointer-events: none;
+  }
+  
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
   
   @media (min-width: 768px) {
     font-size: 24px;
-    padding: 20px 24px;
-    justify-content: flex-start;
+    padding: 25px 20px;
   }
 `;
 
@@ -196,14 +287,55 @@ const MainContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  background: ${props => props.theme === 'golden' 
+    ? `
+      linear-gradient(135deg, #fefdf8 0%, #fef7e3 25%, #fef3c7 50%, #ffffff 100%),
+      linear-gradient(45deg, rgba(255, 215, 0, 0.03) 0%, transparent 25%, rgba(255, 165, 0, 0.02) 50%, transparent 75%)
+    `
+    : `
+      linear-gradient(135deg, #f0fdf9 0%, #e6fffa 25%, #ccfbf1 50%, #ffffff 100%),
+      linear-gradient(45deg, rgba(16, 185, 129, 0.03) 0%, transparent 25%, rgba(5, 150, 105, 0.02) 50%, transparent 75%)
+    `};
+  background-blend-mode: multiply, normal;
   border-radius: 0;
-  padding: 12px;
+  padding: 20px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   min-height: 100vh;
   position: relative;
   margin-top: 60px; /* Account for fixed navbar on mobile */
+  z-index: 1;
+  
+  /* Add elegant texture overlay */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: ${props => props.theme === 'golden' 
+      ? `
+        radial-gradient(circle at 2px 2px, rgba(255, 215, 0, 0.1) 1px, transparent 0),
+        linear-gradient(45deg, transparent 40%, rgba(255, 165, 0, 0.02) 50%, transparent 60%)
+      `
+      : `
+        radial-gradient(circle at 2px 2px, rgba(16, 185, 129, 0.1) 1px, transparent 0),
+        linear-gradient(45deg, transparent 40%, rgba(5, 150, 105, 0.02) 50%, transparent 60%)
+      `};
+    background-size: 20px 20px, 200px 200px;
+    animation: textureFloat 25s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  @keyframes textureFloat {
+    0% { transform: translate(0, 0); }
+    25% { transform: translate(-10px, -5px); }
+    50% { transform: translate(5px, -10px); }
+    75% { transform: translate(-5px, 5px); }
+    100% { transform: translate(0, 0); }
+  }
   
   /* Customize scrollbar */
   &::-webkit-scrollbar {
@@ -212,7 +344,9 @@ const MainContent = styled.div`
   }
   
   &::-webkit-scrollbar-track {
-    background: rgba(226, 232, 240, 0.5);
+    background: ${props => props.theme === 'golden' 
+      ? 'rgba(255, 215, 0, 0.1)' 
+      : 'rgba(16, 185, 129, 0.1)'};
     border-radius: 4px;
   }
   
@@ -234,28 +368,63 @@ const MainContent = styled.div`
 `;
 
 const Header = styled.div`
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 24px;
+  background: ${props => props.theme === 'golden' 
+    ? `
+      linear-gradient(135deg, rgba(255, 248, 220, 0.95) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(254, 252, 232, 0.95) 100%)
+    `
+    : `
+      linear-gradient(135deg, rgba(236, 253, 245, 0.95) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(240, 253, 249, 0.95) 100%)
+    `};
+  border-radius: 20px;
+  padding: 25px;
+  margin-bottom: 28px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.02);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: ${props => props.theme === 'golden' 
+    ? '2px solid rgba(255, 215, 0, 0.2)' 
+    : '2px solid rgba(16, 185, 129, 0.2)'};
+  box-shadow: ${props => props.theme === 'golden' 
+    ? '0 8px 32px rgba(255, 165, 0, 0.1), 0 0 40px rgba(255, 215, 0, 0.05)' 
+    : '0 8px 32px rgba(16, 185, 129, 0.1), 0 0 40px rgba(5, 150, 105, 0.05)'};
   position: sticky;
   top: 10px;
   z-index: 10;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(25px);
+  
+  /* Add elegant hover effect */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: ${props => props.theme === 'golden' 
+      ? '0 12px 40px rgba(255, 165, 0, 0.15), 0 0 60px rgba(255, 215, 0, 0.08)' 
+      : '0 12px 40px rgba(16, 185, 129, 0.15), 0 0 60px rgba(5, 150, 105, 0.08)'};
+  }
+  
+  /* Add subtle pattern */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: ${props => props.theme === 'golden' 
+      ? 'linear-gradient(45deg, transparent 48%, rgba(255, 215, 0, 0.02) 50%, transparent 52%)' 
+      : 'linear-gradient(45deg, transparent 48%, rgba(16, 185, 129, 0.02) 50%, transparent 52%)'};
+    background-size: 20px 20px;
+    border-radius: 20px;
+    pointer-events: none;
+  }
   
   @media (min-width: 768px) {
-    padding: 24px 32px;
-    margin-bottom: 32px;
+    padding: 30px 40px;
+    margin-bottom: 35px;
     flex-direction: row;
     justify-content: space-between;
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    border-radius: 24px;
   }
 `;
 
@@ -265,25 +434,32 @@ const WelcomeText = styled.div`
   margin-bottom: 15px;
   
   h1 {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 700;
-    margin-bottom: 8px;
-    background: linear-gradient(135deg, #1976D2, #64B5F6, #42A5F5);
+    margin-bottom: 10px;
+    background: ${props => props.theme === 'golden' 
+      ? 'linear-gradient(135deg, #DAA520 0%, #FFD700 30%, #FFA500 70%, #FF8C00 100%)' 
+      : 'linear-gradient(135deg, #065f46 0%, #10B981 30%, #34D399 70%, #6EE7B7 100%)'};
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     display: inline-block;
     position: relative;
+    text-shadow: ${props => props.theme === 'golden' 
+      ? '0 0 20px rgba(255, 215, 0, 0.3)' 
+      : '0 0 20px rgba(16, 185, 129, 0.3)'};
     
     &::after {
       content: '';
       position: absolute;
-      bottom: -4px;
+      bottom: -6px;
       left: 0;
       width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, #1976D2, transparent);
-      border-radius: 2px;
+      height: 3px;
+      background: ${props => props.theme === 'golden' 
+        ? 'linear-gradient(90deg, #FFD700, rgba(255, 215, 0, 0.3), transparent)' 
+        : 'linear-gradient(90deg, #10B981, rgba(16, 185, 129, 0.3), transparent)'};
+      border-radius: 3px;
     }
   }
   
@@ -310,21 +486,29 @@ const WelcomeText = styled.div`
 `;
 
 const LogoutButton = styled(motion.button)`
-  background: linear-gradient(135deg, #FF6B9D 0%, #C44569 100%);
+  background: ${props => props.theme === 'golden' 
+    ? 'linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FFD23F 100%)' 
+    : 'linear-gradient(135deg, #EC4899 0%, #BE185D 50%, #9D174D 100%)'};
   color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 12px;
+  padding: 12px 24px;
+  border-radius: 16px;
   font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
-  transition: all 0.3s ease;
-  font-size: 14px;
-  box-shadow: 0 4px 16px rgba(196, 69, 105, 0.3);
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 15px;
+  box-shadow: ${props => props.theme === 'golden' 
+    ? '0 4px 16px rgba(255, 107, 53, 0.3), 0 0 20px rgba(255, 210, 63, 0.2)' 
+    : '0 4px 16px rgba(236, 72, 153, 0.3), 0 0 20px rgba(157, 23, 77, 0.2)'};
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(10px);
+  border: ${props => props.theme === 'golden' 
+    ? '1px solid rgba(255, 210, 63, 0.3)' 
+    : '1px solid rgba(236, 72, 153, 0.3)'};
 
   &::before {
     content: '';
@@ -333,14 +517,18 @@ const LogoutButton = styled(motion.button)`
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.6s ease;
   }
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(255, 107, 157, 0.4);
-    background: linear-gradient(135deg, #FF8FA3 0%, #D63384 100%);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: ${props => props.theme === 'golden' 
+      ? '0 8px 24px rgba(255, 107, 53, 0.4), 0 0 30px rgba(255, 210, 63, 0.3)' 
+      : '0 8px 24px rgba(236, 72, 153, 0.4), 0 0 30px rgba(157, 23, 77, 0.3)'};
+    background: ${props => props.theme === 'golden' 
+      ? 'linear-gradient(135deg, #FF8A50 0%, #F7931E 30%, #FFD23F 70%, #FFED4E 100%)' 
+      : 'linear-gradient(135deg, #F472B6 0%, #EC4899 30%, #BE185D 70%, #9D174D 100%)'};
     
     &::before {
       left: 100%;
@@ -348,19 +536,22 @@ const LogoutButton = styled(motion.button)`
   }
   
   &:active {
-    transform: translateY(1px);
-    box-shadow: 0 4px 12px rgba(196, 69, 105, 0.2);
+    transform: translateY(0) scale(0.98);
+    box-shadow: ${props => props.theme === 'golden' 
+      ? '0 4px 12px rgba(255, 107, 53, 0.2)' 
+      : '0 4px 12px rgba(236, 72, 153, 0.2)'};
   }
   
   @media (min-width: 768px) {
-    padding: 12px 24px;
-    font-size: 15px;
-    gap: 10px;
+    padding: 14px 28px;
+    font-size: 16px;
+    gap: 12px;
+    border-radius: 18px;
   }
   
   @media (min-width: 992px) {
-    padding: 14px 28px;
-    font-size: 16px;
+    padding: 16px 32px;
+    font-size: 17px;
   }
 `;
 
@@ -390,38 +581,95 @@ const ContentGrid = styled.div`
 `;
 
 const Card = styled(motion.div)`
-  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-  padding: 24px;
-  border: 1px solid rgba(0, 0, 0, 0.02);
+  background: ${props => props.theme === 'golden' 
+    ? `
+      linear-gradient(135deg, 
+        rgba(255, 253, 245, 0.95) 0%, 
+        rgba(255, 255, 255, 0.9) 30%, 
+        rgba(254, 252, 232, 0.95) 100%
+      )
+    `
+    : `
+      linear-gradient(135deg, 
+        rgba(240, 253, 249, 0.95) 0%, 
+        rgba(255, 255, 255, 0.9) 30%, 
+        rgba(236, 253, 245, 0.95) 100%
+      )
+    `};
+  border-radius: 20px;
+  box-shadow: ${props => props.theme === 'golden' 
+    ? '0 8px 32px rgba(255, 165, 0, 0.1), 0 0 40px rgba(255, 215, 0, 0.05)' 
+    : '0 8px 32px rgba(16, 185, 129, 0.1), 0 0 40px rgba(5, 150, 105, 0.05)'};
+  padding: 28px;
+  border: ${props => props.theme === 'golden' 
+    ? '2px solid rgba(255, 215, 0, 0.15)' 
+    : '2px solid rgba(16, 185, 129, 0.15)'};
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(20px);
   
+  /* Elegant top accent */
   &::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #1976D2, #64B5F6, #42A5F5);
-    border-radius: 16px 16px 0 0;
+    height: 4px;
+    background: ${props => props.theme === 'golden' 
+      ? 'linear-gradient(90deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%)' 
+      : 'linear-gradient(90deg, #10B981 0%, #059669 50%, #047857 100%)'};
+    border-radius: 20px 20px 0 0;
+  }
+  
+  /* Subtle pattern overlay */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: ${props => props.theme === 'golden' 
+      ? `
+        radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.02) 0%, transparent 50%)
+      `
+      : `
+        radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(5, 150, 105, 0.02) 0%, transparent 50%)
+      `};
+    border-radius: 20px;
+    pointer-events: none;
   }
   
   &:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: ${props => props.theme === 'golden' 
+      ? '0 16px 48px rgba(255, 165, 0, 0.15), 0 0 60px rgba(255, 215, 0, 0.08)' 
+      : '0 16px 48px rgba(16, 185, 129, 0.15), 0 0 60px rgba(5, 150, 105, 0.08)'};
+    border-color: ${props => props.theme === 'golden' 
+      ? 'rgba(255, 215, 0, 0.3)' 
+      : 'rgba(16, 185, 129, 0.3)'};
     
     &::before {
-      background: linear-gradient(90deg, #FFD700, #FFA500, #FF8C00);
+      height: 6px;
+      background: ${props => props.theme === 'golden' 
+        ? 'linear-gradient(90deg, #FFD700 0%, #FFA500 30%, #FF8C00 60%, #FFD700 100%)' 
+        : 'linear-gradient(90deg, #10B981 0%, #059669 30%, #047857 60%, #10B981 100%)'};
+      animation: shimmerTop 2s ease-in-out infinite;
     }
+  }
+  
+  @keyframes shimmerTop {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
   }
   
   h3 {
     color: #1a202c;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 700;
     margin-bottom: 16px;
     display: flex;
