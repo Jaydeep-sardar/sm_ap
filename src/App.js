@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import ContentForm from './components/Contents/ContentForm';
 import Genre from './components/Genre/Genre';
 import Tags from './components/Tags/Tags';
+import WatchAge from './components/WatchAge/WatchAge';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import { validateSession } from './store/authSlice';
 
@@ -48,7 +49,7 @@ function App() {
         } />
         <Route path="/watch-age" element={
           <ProtectedRoute>
-            <Dashboard><div className="placeholder-content"><h2>Watch-age Page</h2><p>This page is under construction</p></div></Dashboard>
+            <Dashboard><WatchAge /></Dashboard>
           </ProtectedRoute>
         } />
         <Route path="/slider" element={

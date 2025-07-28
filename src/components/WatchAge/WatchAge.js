@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-// API Configuration
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
-
-const GenreContainer = styled(motion.div)`
+const WatchAgeContainer = styled(motion.div)`
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
@@ -23,6 +20,7 @@ const GenreContainer = styled(motion.div)`
 
 const Header = styled.div`
   margin-bottom: 30px;
+  text-align: center;
 `;
 
 const Title = styled.h1`
@@ -36,7 +34,7 @@ const Title = styled.h1`
   }
 `;
 
-const AddGenreSection = styled(motion.div)`
+const AddWatchAgeSection = styled(motion.div)`
   background: ${props => props.theme === 'golden' 
     ? 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)'
     : 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)'
@@ -54,7 +52,7 @@ const AddGenreSection = styled(motion.div)`
   };
 `;
 
-const AddGenreTitle = styled.h2`
+const AddWatchAgeTitle = styled.h2`
   color: ${props => props.theme === 'golden' ? '#92400e' : '#065f46'};
   font-size: 18px;
   font-weight: 600;
@@ -72,7 +70,7 @@ const InputSection = styled.div`
   }
 `;
 
-const GenreInput = styled.input`
+const WatchAgeInput = styled.input`
   flex: 1;
   padding: 12px 16px;
   border: 2px solid ${props => props.theme === 'golden' 
@@ -101,8 +99,8 @@ const GenreInput = styled.input`
 
 const AddButton = styled(motion.button)`
   background: ${props => props.theme === 'golden' 
-    ? 'linear-gradient(135deg, #d97706 0%, #b45309 100%)'
-    : 'linear-gradient(135deg, #059669 0%, #047857 100%)'
+    ? 'linear-gradient(135deg, #1f2937 0%, #111827 100%)'
+    : 'linear-gradient(135deg, #1f2937 0%, #111827 100%)'
   };
   color: white;
   border: none;
@@ -115,10 +113,7 @@ const AddButton = styled(motion.button)`
   
   &:hover {
     transform: translateY(-2px);
-    box-shadow: ${props => props.theme === 'golden' 
-      ? '0 8px 25px rgba(217, 119, 6, 0.3)'
-      : '0 8px 25px rgba(5, 150, 105, 0.3)'
-    };
+    box-shadow: 0 8px 25px rgba(31, 41, 55, 0.3);
   }
   
   &:active {
@@ -146,10 +141,7 @@ const Table = styled.table`
 `;
 
 const TableHeader = styled.thead`
-  background: ${props => props.theme === 'golden' 
-    ? 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'
-    : 'linear-gradient(135deg, #10b981 0%, #059669 100%)'
-  };
+  background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
 `;
 
 const TableHeaderRow = styled.tr``;
@@ -157,7 +149,7 @@ const TableHeaderRow = styled.tr``;
 const TableHeaderCell = styled.th`
   padding: 16px 20px;
   text-align: left;
-  color: white;
+  color: #374151;
   font-weight: 600;
   font-size: 14px;
   text-transform: uppercase;
@@ -167,7 +159,7 @@ const TableHeaderCell = styled.th`
     width: 80px;
   }
   
-  &:last-child {
+  &:nth-child(3), &:nth-child(4) {
     width: 120px;
     text-align: center;
   }
@@ -273,121 +265,42 @@ const EmptyState = styled.div`
   color: #6b7280;
 `;
 
-const Genre = () => {
+const WatchAge = () => {
   const currentTheme = useSelector((state) => state.theme.currentTheme);
-  const [genres, setGenres] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [newGenre, setNewGenre] = useState('');
+  const [watchAges, setWatchAges] = useState([
+    { id: 1, ageRange: '6+' },
+    { id: 2, ageRange: '12+' },
+    { id: 3, ageRange: '16+' },
+    { id: 4, ageRange: '18+' }
+  ]);
+  
+  const [newWatchAge, setNewWatchAge] = useState('');
   const [editingId, setEditingId] = useState(null);
   const [editValue, setEditValue] = useState('');
 
-  // Fetch genres on component mount
-  useEffect(() => {
-    fetchGenres();
-  }, []);
-
-  const fetchGenres = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(`${API_BASE_URL}/genres`);
-      if (response.ok) {
-        const data = await response.json();
-        setGenres(data);
-      } else {
-        // Fallback to default data if API fails
-        setGenres([
-          { id: 1, name: 'Sci-Fi' },
-          { id: 2, name: 'Adventure' },
-          { id: 3, name: 'Children & Family' },
-          { id: 4, name: 'Classic' },
-          { id: 5, name: 'Comedies' },
-          { id: 6, name: 'Documentaries' },
-          { id: 7, name: 'Dramas' },
-          { id: 8, name: 'Horror' },
-          { id: 9, name: 'Music' },
-          { id: 10, name: 'Romantic' },
-          { id: 11, name: 'Fantasy' },
-          { id: 12, name: 'Sports' },
-          { id: 13, name: 'Thrillers' },
-          { id: 14, name: 'TV Shows' },
-          { id: 15, name: 'Action' },
-          { id: 16, name: 'Action Sci-Fi & Fantasy' },
-          { id: 17, name: 'Crime' }
-        ]);
-      }
-    } catch (error) {
-      console.error('Error fetching genres:', error);
-      // Use fallback data
-      setGenres([
-        { id: 1, name: 'Sci-Fi' },
-        { id: 2, name: 'Adventure' },
-        { id: 3, name: 'Children & Family' },
-        { id: 4, name: 'Classic' },
-        { id: 5, name: 'Comedies' },
-        { id: 6, name: 'Documentaries' },
-        { id: 7, name: 'Dramas' },
-        { id: 8, name: 'Horror' },
-        { id: 9, name: 'Music' },
-        { id: 10, name: 'Romantic' },
-        { id: 11, name: 'Fantasy' },
-        { id: 12, name: 'Sports' },
-        { id: 13, name: 'Thrillers' },
-        { id: 14, name: 'TV Shows' },
-        { id: 15, name: 'Action' },
-        { id: 16, name: 'Action Sci-Fi & Fantasy' },
-        { id: 17, name: 'Crime' }
-      ]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleAddGenre = async () => {
-    if (newGenre.trim()) {
-      try {
-        const response = await fetch(`${API_BASE_URL}/genres`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ name: newGenre.trim() })
-        });
-        
-        if (response.ok) {
-          const savedGenre = await response.json();
-          setGenres([...genres, savedGenre]);
-          setNewGenre('');
-        } else {
-          // Fallback to local state
-          const newId = Math.max(...genres.map(g => g.id), 0) + 1;
-          setGenres([...genres, { id: newId, name: newGenre.trim() }]);
-          setNewGenre('');
-        }
-      } catch (error) {
-        console.error('Error adding genre:', error);
-        // Fallback to local state
-        const newId = Math.max(...genres.map(g => g.id), 0) + 1;
-        setGenres([...genres, { id: newId, name: newGenre.trim() }]);
-        setNewGenre('');
-      }
+  const handleAddWatchAge = () => {
+    if (newWatchAge.trim()) {
+      const newId = Math.max(...watchAges.map(w => w.id), 0) + 1;
+      setWatchAges([...watchAges, { id: newId, ageRange: newWatchAge.trim() }]);
+      setNewWatchAge('');
     }
   };
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
-      handleAddGenre();
+      handleAddWatchAge();
     }
   };
 
-  const handleEditStart = (id, currentName) => {
+  const handleEditStart = (id, currentAgeRange) => {
     setEditingId(id);
-    setEditValue(currentName);
+    setEditValue(currentAgeRange);
   };
 
   const handleEditSave = (id) => {
     if (editValue.trim()) {
-      setGenres(genres.map(genre => 
-        genre.id === id ? { ...genre, name: editValue.trim() } : genre
+      setWatchAges(watchAges.map(watchAge => 
+        watchAge.id === id ? { ...watchAge, ageRange: editValue.trim() } : watchAge
       ));
     }
     setEditingId(null);
@@ -408,48 +321,48 @@ const Genre = () => {
   };
 
   const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this genre?')) {
-      setGenres(genres.filter(genre => genre.id !== id));
+    if (window.confirm('Are you sure you want to delete this watch age?')) {
+      setWatchAges(watchAges.filter(watchAge => watchAge.id !== id));
     }
   };
 
   return (
-    <GenreContainer
+    <WatchAgeContainer
       theme={currentTheme}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
       <Header>
-        <Title theme={currentTheme}>Genre Management</Title>
+        <Title theme={currentTheme}>Watch Age</Title>
       </Header>
 
-      <AddGenreSection
+      <AddWatchAgeSection
         theme={currentTheme}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1 }}
       >
-        <AddGenreTitle theme={currentTheme}>Add Genre</AddGenreTitle>
+        <AddWatchAgeTitle theme={currentTheme}>Add Watch Age</AddWatchAgeTitle>
         <InputSection>
-          <GenreInput
+          <WatchAgeInput
             theme={currentTheme}
             type="text"
             placeholder="enter here..."
-            value={newGenre}
-            onChange={(e) => setNewGenre(e.target.value)}
+            value={newWatchAge}
+            onChange={(e) => setNewWatchAge(e.target.value)}
             onKeyPress={handleKeyPress}
           />
           <AddButton
             theme={currentTheme}
-            onClick={handleAddGenre}
+            onClick={handleAddWatchAge}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Add
           </AddButton>
         </InputSection>
-      </AddGenreSection>
+      </AddWatchAgeSection>
 
       <TableContainer
         theme={currentTheme}
@@ -461,53 +374,53 @@ const Genre = () => {
           <TableHeader theme={currentTheme}>
             <TableHeaderRow>
               <TableHeaderCell>ID</TableHeaderCell>
-              <TableHeaderCell>NAME</TableHeaderCell>
+              <TableHeaderCell>AGE RANGE</TableHeaderCell>
               <TableHeaderCell>EDIT</TableHeaderCell>
               <TableHeaderCell>DELETE</TableHeaderCell>
             </TableHeaderRow>
           </TableHeader>
           <TableBody>
-            {genres.length === 0 ? (
+            {watchAges.length === 0 ? (
               <tr>
                 <td colSpan="4">
                   <EmptyState>
-                    <p>No genres available. Add your first genre above!</p>
+                    <p>No watch ages available. Add your first watch age above!</p>
                   </EmptyState>
                 </td>
               </tr>
             ) : (
-              genres.map((genre, index) => (
+              watchAges.map((watchAge, index) => (
                 <TableRow
-                  key={genre.id}
+                  key={watchAge.id}
                   theme={currentTheme}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
                 >
-                  <TableCell>{genre.id}</TableCell>
+                  <TableCell>{watchAge.id}</TableCell>
                   <EditableCell
                     theme={currentTheme}
-                    onClick={() => editingId !== genre.id && handleEditStart(genre.id, genre.name)}
+                    onClick={() => editingId !== watchAge.id && handleEditStart(watchAge.id, watchAge.ageRange)}
                   >
-                    {editingId === genre.id ? (
+                    {editingId === watchAge.id ? (
                       <EditInput
                         theme={currentTheme}
                         type="text"
                         value={editValue}
                         onChange={(e) => setEditValue(e.target.value)}
-                        onKeyPress={(e) => handleEditKeyPress(e, genre.id)}
-                        onBlur={() => handleEditSave(genre.id)}
+                        onKeyPress={(e) => handleEditKeyPress(e, watchAge.id)}
+                        onBlur={() => handleEditSave(watchAge.id)}
                         autoFocus
                       />
                     ) : (
-                      genre.name
+                      watchAge.ageRange
                     )}
                   </EditableCell>
                   <ActionCell>
                     <ActionButton
                       theme={currentTheme}
                       className="edit"
-                      onClick={() => handleEditStart(genre.id, genre.name)}
+                      onClick={() => handleEditStart(watchAge.id, watchAge.ageRange)}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                     >
@@ -518,7 +431,7 @@ const Genre = () => {
                     <ActionButton
                       theme={currentTheme}
                       className="delete"
-                      onClick={() => handleDelete(genre.id)}
+                      onClick={() => handleDelete(watchAge.id)}
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                     >
@@ -531,8 +444,8 @@ const Genre = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </GenreContainer>
+    </WatchAgeContainer>
   );
 };
 
-export default Genre;
+export default WatchAge;
