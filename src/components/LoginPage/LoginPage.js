@@ -52,7 +52,7 @@ const LoginPage = () => {
     
     // Validate credentials
     setTimeout(() => {
-      if (formData.email === "a@admin.com" && formData.password === "Abcd@1234") {
+      if (formData.email === "admin@yenumax.com" && formData.password === "maxYenu@1847") {
         dispatch(loginSuccess({ user: { name: "Admin", email: formData.email } }));
         navigate('/contents');
       } else if (!formData.email || !formData.password) {
