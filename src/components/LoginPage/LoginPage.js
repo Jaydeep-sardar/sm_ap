@@ -7,6 +7,7 @@ import { FiLogIn } from 'react-icons/fi';
 import { BsAward } from 'react-icons/bs';
 import { loginStart, loginSuccess, loginFailure } from '../../store/authSlice';
 import { setTheme } from '../../store/themeSlice';
+import { API_CONFIG } from '../../config/api';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -50,8 +51,45 @@ const LoginPage = () => {
     e.preventDefault();
     dispatch(loginStart());
     
-    // Validate credentials
-    setTimeout(() => {
+    try {
+      // Call actual API for authentication
+      const response = await fetch(`${API_CONFIG.BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        const userData = { 
+          name: result.user?.name || "Admin", 
+          email: formData.email,
+          role: result.user?.role || "administrator",
+          token: result.token,
+          loginTime: new Date().toISOString()
+        };
+        
+        dispatch(loginSuccess({ 
+          user: userData, 
+          rememberMe: false
+        }));
+        
+        // Store token for API calls
+        sessionStorage.setItem('authToken', result.token);
+        window.dispatchEvent(new Event('sessionStorageChange'));
+        
+        navigate('/home');
+      } else {
+        const errorData = await response.json();
+        dispatch(loginFailure(errorData.message || 'Login failed'));
+      }
+    } catch (error) {
+      // Fallback to hardcoded credentials if API is not available
       if (formData.email === "admin@yenumax.com" && formData.password === "maxYenu@1847") {
         const userData = { 
           name: "Admin", 
@@ -61,19 +99,17 @@ const LoginPage = () => {
         };
         dispatch(loginSuccess({ 
           user: userData, 
-          rememberMe: false // Always use session-based auth for better incognito support
+          rememberMe: false
         }));
         
-        // Trigger custom event for session storage change
         window.dispatchEvent(new Event('sessionStorageChange'));
-        
-        navigate('/contents');
+        navigate('/home');
       } else if (!formData.email || !formData.password) {
         dispatch(loginFailure('Please fill in all fields'));
       } else {
         dispatch(loginFailure('Invalid email or password. Please check your credentials.'));
       }
-    }, 1000);
+    }
   };
 
   const handleThemeSwitch = (theme) => {
