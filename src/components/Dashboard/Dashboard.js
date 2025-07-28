@@ -382,14 +382,16 @@ const MainContent = styled.div`
   background-blend-mode: multiply, overlay, soft-light;
   background-attachment: local;
   border-radius: 0;
-  padding: 25px;
+  padding: 15px;
   overflow-y: auto;
+  overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
   min-height: 100vh;
   position: relative;
   margin-top: 60px;
   z-index: 1;
   backdrop-filter: blur(10px);
+  scroll-behavior: smooth;
   
   /* Add sophisticated texture overlay */
   &::before {
@@ -460,17 +462,17 @@ const MainContent = styled.div`
     100% { transform: translate(0, 0) rotate(0deg); }
   }
   
-  /* Enhanced scrollbar */
+  /* Enhanced responsive scrollbar */
   &::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
   
   &::-webkit-scrollbar-track {
     background: ${props => props.theme === 'golden' 
-      ? 'linear-gradient(180deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 165, 0, 0.05) 100%)' 
-      : 'linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%)'};
-    border-radius: 5px;
+      ? 'linear-gradient(180deg, rgba(255, 215, 0, 0.08) 0%, rgba(255, 165, 0, 0.04) 100%)' 
+      : 'linear-gradient(180deg, rgba(16, 185, 129, 0.08) 0%, rgba(5, 150, 105, 0.04) 100%)'};
+    border-radius: 4px;
     border: ${props => props.theme === 'golden' 
       ? '1px solid rgba(255, 215, 0, 0.1)' 
       : '1px solid rgba(16, 185, 129, 0.1)'};
@@ -480,29 +482,52 @@ const MainContent = styled.div`
     background: ${props => props.theme === 'golden' 
       ? 'linear-gradient(180deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%)' 
       : 'linear-gradient(180deg, #10B981 0%, #059669 50%, #047857 100%)'};
-    border-radius: 5px;
+    border-radius: 4px;
     border: ${props => props.theme === 'golden' 
-      ? '2px solid rgba(255, 215, 0, 0.2)' 
-      : '2px solid rgba(16, 185, 129, 0.2)'};
+      ? '1px solid rgba(255, 215, 0, 0.2)' 
+      : '1px solid rgba(16, 185, 129, 0.2)'};
     box-shadow: ${props => props.theme === 'golden' 
-      ? '0 2px 8px rgba(255, 165, 0, 0.3)' 
-      : '0 2px 8px rgba(16, 185, 129, 0.3)'};
+      ? '0 2px 6px rgba(255, 165, 0, 0.2)' 
+      : '0 2px 6px rgba(16, 185, 129, 0.2)'};
+    transition: all 0.3s ease;
     
     &:hover {
       background: ${props => props.theme === 'golden' 
         ? 'linear-gradient(180deg, #FFED4E 0%, #FFB800 50%, #FF7F00 100%)' 
         : 'linear-gradient(180deg, #34D399 0%, #10B981 50%, #065F46 100%)'};
       box-shadow: ${props => props.theme === 'golden' 
-        ? '0 4px 12px rgba(255, 165, 0, 0.4)' 
-        : '0 4px 12px rgba(16, 185, 129, 0.4)'};
+        ? '0 4px 10px rgba(255, 165, 0, 0.3)' 
+        : '0 4px 10px rgba(16, 185, 129, 0.3)'};
+    }
+  }
+  
+  /* Mobile responsive adjustments */
+  @media (max-width: 767px) {
+    padding: 12px;
+    margin-top: 65px;
+    
+    &::-webkit-scrollbar {
+      width: 4px;
     }
   }
   
   @media (min-width: 768px) {
-    padding: 30px;
+    padding: 25px;
     margin-left: 260px;
     margin-top: 0;
     min-height: 100vh;
+    
+    &::-webkit-scrollbar {
+      width: 10px;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    padding: 30px;
+  }
+  
+  @media (min-width: 1200px) {
+    padding: 35px;
   }
 `;
 
@@ -968,7 +993,7 @@ const Dashboard = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useSelector((state) => state.auth);
-  const { selectedTheme } = useSelector((state) => state.theme);
+  const { currentTheme } = useSelector((state) => state.theme);
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   const toggleMenu = () => {
@@ -987,12 +1012,13 @@ const Dashboard = ({ children }) => {
     
     return (
       <>
-        <Header>
-          <WelcomeText>
+        <Header theme={currentTheme}>
+          <WelcomeText theme={currentTheme}>
             <h1>Welcome back, {user?.name || 'Admin'}!</h1>
-            <p>Current theme: {selectedTheme === 'golden' ? 'Golden (Luxury & Elegance)' : 'Emerald (Modern & Professional)'}</p>
+            <p>Current theme: {currentTheme === 'golden' ? 'Golden (Luxury & Elegance)' : 'Emerald (Modern & Professional)'}</p>
           </WelcomeText>
           <LogoutButton
+            theme={currentTheme}
             onClick={handleLogout}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -1004,6 +1030,7 @@ const Dashboard = ({ children }) => {
 
         <ContentGrid>
           <Card
+            theme={currentTheme}
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.1, type: "spring", stiffness: 100 }}
@@ -1020,6 +1047,7 @@ const Dashboard = ({ children }) => {
           </Card>
 
           <Card
+            theme={currentTheme}
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 100 }}
@@ -1036,6 +1064,7 @@ const Dashboard = ({ children }) => {
           </Card>
 
           <Card
+            theme={currentTheme}
             initial={{ opacity: 0, y: 30, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.3, type: "spring", stiffness: 100 }}
@@ -1047,7 +1076,7 @@ const Dashboard = ({ children }) => {
             </h3>
             <p>
               Configure your application preferences, manage themes, and customize your admin experience. 
-              Current theme: {selectedTheme === 'golden' ? 'Golden Luxury' : 'Emerald Professional'} mode.
+              Current theme: {currentTheme === 'golden' ? 'Golden Luxury' : 'Emerald Professional'} mode.
             </p>
           </Card>
         </ContentGrid>
@@ -1056,9 +1085,9 @@ const Dashboard = ({ children }) => {
   };
 
   return (
-    <DashboardContainer>
-      <Sidebar>
-        <Logo theme={selectedTheme}>
+    <DashboardContainer theme={currentTheme}>
+      <Sidebar theme={currentTheme}>
+        <Logo theme={currentTheme}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <FiBox /> AdminPanel
           </div>
@@ -1070,7 +1099,7 @@ const Dashboard = ({ children }) => {
         <NavMenu isOpen={menuOpen}>
           <NavItem 
             to="/dashboard" 
-            theme={selectedTheme}
+            theme={currentTheme}
             className={location.pathname === '/dashboard' ? 'active' : ''}
             onClick={() => setMenuOpen(false)}
           >
@@ -1078,7 +1107,7 @@ const Dashboard = ({ children }) => {
           </NavItem>
           <NavItem 
             to="/users" 
-            theme={selectedTheme}
+            theme={currentTheme}
             className={location.pathname === '/users' ? 'active' : ''}
             onClick={() => setMenuOpen(false)}
           >
@@ -1086,7 +1115,7 @@ const Dashboard = ({ children }) => {
           </NavItem>
           <NavItem 
             to="/genre" 
-            theme={selectedTheme}
+            theme={currentTheme}
             className={location.pathname === '/genre' ? 'active' : ''}
             onClick={() => setMenuOpen(false)}
           >
@@ -1094,7 +1123,7 @@ const Dashboard = ({ children }) => {
           </NavItem>
           <NavItem 
             to="/tags" 
-            theme={selectedTheme}
+            theme={currentTheme}
             className={location.pathname === '/tags' ? 'active' : ''}
             onClick={() => setMenuOpen(false)}
           >
@@ -1102,7 +1131,7 @@ const Dashboard = ({ children }) => {
           </NavItem>
           <NavItem 
             to="/watch-age" 
-            theme={selectedTheme}
+            theme={currentTheme}
             className={location.pathname === '/watch-age' ? 'active' : ''}
             onClick={() => setMenuOpen(false)}
           >
@@ -1110,7 +1139,7 @@ const Dashboard = ({ children }) => {
           </NavItem>
           <NavItem 
             to="/slider" 
-            theme={selectedTheme}
+            theme={currentTheme}
             className={location.pathname === '/slider' ? 'active' : ''}
             onClick={() => setMenuOpen(false)}
           >
@@ -1118,7 +1147,7 @@ const Dashboard = ({ children }) => {
           </NavItem>
           <NavItem 
             to="/webseries" 
-            theme={selectedTheme}
+            theme={currentTheme}
             className={location.pathname === '/webseries' ? 'active' : ''}
             onClick={() => setMenuOpen(false)}
           >
@@ -1126,7 +1155,7 @@ const Dashboard = ({ children }) => {
           </NavItem>
           <NavItem 
             to="/movies" 
-            theme={selectedTheme}
+            theme={currentTheme}
             className={location.pathname === '/movies' ? 'active' : ''}
             onClick={() => setMenuOpen(false)}
           >
@@ -1134,7 +1163,7 @@ const Dashboard = ({ children }) => {
           </NavItem>
           <NavItem 
             to="/contents" 
-            theme={selectedTheme}
+            theme={currentTheme}
             className={location.pathname === '/contents' ? 'active' : ''}
             onClick={() => setMenuOpen(false)}
           >
@@ -1142,7 +1171,7 @@ const Dashboard = ({ children }) => {
           </NavItem>
           <NavItem 
             to="/trending" 
-            theme={selectedTheme}
+            theme={currentTheme}
             className={location.pathname === '/trending' ? 'active' : ''}
             onClick={() => setMenuOpen(false)}
           >
@@ -1150,7 +1179,7 @@ const Dashboard = ({ children }) => {
           </NavItem>
           <NavItem
             to="/" 
-            theme={selectedTheme}
+            theme={currentTheme}
             onClick={() => {
               setMenuOpen(false);
               handleLogout();
@@ -1161,7 +1190,7 @@ const Dashboard = ({ children }) => {
         </NavMenu>
       </Sidebar>
       
-      <MainContent>
+      <MainContent theme={currentTheme}>
         {renderDashboardContent()}
       </MainContent>
     </DashboardContainer>
