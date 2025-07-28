@@ -2,6 +2,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 html {
@@ -9,8 +12,13 @@ html {
   width: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
+  scroll-padding-top: 20px;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1;
 }
 
 body {
@@ -27,32 +35,71 @@ body {
   scroll-behavior: smooth;
   line-height: 1.6;
   text-rendering: optimizeLegibility;
+  overscroll-behavior: contain;
+  font-size: 16px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
 }
 
-/* Enhanced scrollbar for all elements */
+/* Ultra-smooth enhanced scrollbar for all elements */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 4px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.02) 0%, rgba(0, 0, 0, 0.05) 100%);
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-  transition: background 0.3s ease;
+  background: linear-gradient(135deg, 
+    rgba(100, 116, 139, 0.3) 0%, 
+    rgba(71, 85, 105, 0.4) 50%, 
+    rgba(51, 65, 85, 0.5) 100%
+  );
+  border-radius: 6px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, 
+    rgba(100, 116, 139, 0.5) 0%, 
+    rgba(71, 85, 105, 0.6) 50%, 
+    rgba(51, 65, 85, 0.7) 100%
+  );
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Smooth scrolling for all scrollable elements */
+/* Smooth scrolling for all scrollable elements with enhanced performance */
 * {
   scroll-behavior: smooth !important;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Enhanced momentum scrolling for iOS and better performance */
+html, body, div, main, section, article {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  overscroll-behavior-x: none;
+}
+
+/* GPU acceleration for smoother animations */
+* {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000;
+  perspective: 1000;
 }
 
 /* Responsive images and media */
