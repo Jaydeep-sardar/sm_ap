@@ -4,6 +4,7 @@ import { useNavigate, NavLink, useLocation } from 'react-router-dom';
 import { logout, refreshToken } from '../../store/authSlice';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import Home from '../Home/Home';
 // Import Feather icons
 // eslint-disable-next-line
 import { FiLogOut, FiUser, FiSettings, FiHome, FiFileText, FiImage, FiBox, FiUsers, FiBarChart2 } from 'react-icons/fi';
@@ -1197,6 +1198,12 @@ const Dashboard = ({ children }) => {
       return children;
     }
     
+    // Check if we're on the main dashboard route
+    if (location.pathname === '/dashboard') {
+      return <Home />;
+    }
+    
+    // Default dashboard content for other routes or fallback
     return (
       <>
         <Header theme={currentTheme}>

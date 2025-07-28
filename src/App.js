@@ -4,6 +4,8 @@ import { useDispatch } from 'react-redux';
 import LoginPage from './components/LoginPage/LoginPage';
 import Dashboard from './components/Dashboard/Dashboard';
 import ContentForm from './components/Contents/ContentForm';
+import Genre from './components/Genre/Genre';
+import Tags from './components/Tags/Tags';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import { validateSession } from './store/authSlice';
 
@@ -36,12 +38,12 @@ function App() {
         } />
         <Route path="/genre" element={
           <ProtectedRoute>
-            <Dashboard><div className="placeholder-content"><h2>Genre Page</h2><p>This page is under construction</p></div></Dashboard>
+            <Dashboard><Genre /></Dashboard>
           </ProtectedRoute>
         } />
         <Route path="/tags" element={
           <ProtectedRoute>
-            <Dashboard><div className="placeholder-content"><h2>Tags Page</h2><p>This page is under construction</p></div></Dashboard>
+            <Dashboard><Tags /></Dashboard>
           </ProtectedRoute>
         } />
         <Route path="/watch-age" element={
