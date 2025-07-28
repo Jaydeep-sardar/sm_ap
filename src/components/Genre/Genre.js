@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { API_CONFIG } from '../../config/api';
 
 // API Configuration
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = API_CONFIG.BASE_URL;
 
 const GenreContainer = styled(motion.div)`
   padding: 20px;

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FiSave, FiUpload, FiImage, FiLoader, FiTrash2, FiEdit, FiEye } from 'react-icons/fi';
+import { API_CONFIG } from '../../config/api';
 
 const ContentsContainer = styled.div`
   min-height: calc(100vh - 120px);
@@ -386,7 +387,7 @@ const StatusMessage = styled(motion.div)`
 `;
 
 // API Configuration
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = API_CONFIG.BASE_URL;
 
 const ContentForm = () => {
   const currentTheme = useSelector((state) => state.theme.currentTheme);
