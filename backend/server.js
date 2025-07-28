@@ -9,7 +9,16 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['https://your-vercel-app.vercel.app'] // Replace with your actual Vercel URL
+    : ['http://localhost:3000'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
