@@ -25,18 +25,21 @@ const DashboardContainer = styled.div`
 
 const Sidebar = styled.div`
   width: 100%;
-  background: rgba(25, 118, 210, 0.95);
+  background: ${props => props.theme === 'golden' 
+    ? 'linear-gradient(135deg, #FFD700, #FFA500, #FF8C00)' 
+    : 'linear-gradient(135deg, #10B981, #059669, #047857)'};
   padding: 0;
   height: auto;
   z-index: 100;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
   
   @media (min-width: 768px) {
     width: 260px;
-    margin-right: 24px;
     height: 100vh;
-    position: sticky;
-    top: 0;
+    position: fixed;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     
@@ -65,10 +68,13 @@ const Logo = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  background: ${props => props.theme === 'golden' ? '#1565C0' : '#1565C0'};
+  background: ${props => props.theme === 'golden' 
+    ? 'rgba(255, 140, 0, 0.2)' 
+    : 'rgba(4, 120, 87, 0.2)'};
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   position: relative;
   z-index: 101;
+  backdrop-filter: blur(10px);
   
   @media (min-width: 768px) {
     font-size: 24px;
@@ -106,7 +112,7 @@ const MenuToggle = styled.button`
 const NavMenu = styled.div`
   display: ${props => props.isOpen ? 'flex' : 'none'};
   flex-direction: column;
-  max-height: ${props => props.isOpen ? '80vh' : '0'};
+  max-height: ${props => props.isOpen ? 'calc(100vh - 60px)' : '0'};
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   transition: max-height 0.3s ease;
@@ -128,6 +134,7 @@ const NavMenu = styled.div`
   @media (min-width: 768px) {
     display: flex;
     max-height: calc(100vh - 80px);
+    overflow-y: auto;
   }
 `;
 
@@ -150,7 +157,7 @@ const NavItem = styled(NavLink)`
     top: 0;
     height: 100%;
     width: 0;
-    background: #64B5F6;
+    background: ${props => props.theme === 'golden' ? '#FFD700' : '#10B981'};
     transition: width 0.2s ease;
   }
   font-size: 14px;
@@ -160,13 +167,15 @@ const NavItem = styled(NavLink)`
   }
   
   &.active {
-    background: rgba(25, 118, 210, 0.3);
+    background: ${props => props.theme === 'golden' 
+      ? 'rgba(255, 215, 0, 0.2)' 
+      : 'rgba(16, 185, 129, 0.2)'};
     color: white;
     font-weight: 600;
     
     &::before {
       width: 4px;
-      background: #64B5F6;
+      background: ${props => props.theme === 'golden' ? '#FFD700' : '#10B981'};
     }
   }
   
@@ -192,8 +201,9 @@ const MainContent = styled.div`
   padding: 10px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  min-height: 100%;
+  min-height: 100vh;
   position: relative;
+  margin-top: 60px; /* Account for fixed navbar on mobile */
   
   /* Customize scrollbar */
   &::-webkit-scrollbar {
@@ -212,6 +222,8 @@ const MainContent = styled.div`
   
   @media (min-width: 768px) {
     padding: 20px;
+    margin-left: 260px; /* Account for fixed sidebar */
+    margin-top: 0;
     min-height: 100vh;
   }
 `;
