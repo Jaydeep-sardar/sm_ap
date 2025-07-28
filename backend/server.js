@@ -11,7 +11,11 @@ const PORT = process.env.PORT || 3001;
 // Middleware
 const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-vercel-app.vercel.app'] // Replace with your actual Vercel URL
+    ? [
+        'https://sm-dt4ahzkno-jaydeep-sardars-projects.vercel.app',
+        'https://sm-ap.vercel.app', // If you set up custom domain
+        /\.vercel\.app$/ // Allow all vercel.app subdomains
+      ]
     : ['http://localhost:3000'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
