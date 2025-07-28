@@ -196,9 +196,9 @@ const MainContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #f5f7fa;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
   border-radius: 0;
-  padding: 10px;
+  padding: 12px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   min-height: 100vh;
@@ -207,21 +207,26 @@ const MainContent = styled.div`
   
   /* Customize scrollbar */
   &::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
   }
   
   &::-webkit-scrollbar-track {
-    background: #e6e6e6;
+    background: rgba(226, 232, 240, 0.5);
+    border-radius: 4px;
   }
   
   &::-webkit-scrollbar-thumb {
-    background: #bdbdbd;
-    border-radius: 3px;
+    background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+    border-radius: 4px;
+    
+    &:hover {
+      background: linear-gradient(135deg, #94a3b8, #64748b);
+    }
   }
   
   @media (min-width: 768px) {
-    padding: 20px;
+    padding: 24px;
     margin-left: 260px; /* Account for fixed sidebar */
     margin-top: 0;
     min-height: 100vh;
@@ -229,27 +234,28 @@ const MainContent = styled.div`
 `;
 
 const Header = styled.div`
-  background: white;
-  border-radius: 8px;
-  padding: 15px;
-  margin-bottom: 15px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   position: sticky;
-  top: 0;
+  top: 10px;
   z-index: 10;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(20px);
   
   @media (min-width: 768px) {
-    padding: 20px 32px;
-    margin-bottom: 24px;
+    padding: 24px 32px;
+    margin-bottom: 32px;
     flex-direction: row;
     justify-content: space-between;
-    border-radius: 12px;
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   }
 `;
 
@@ -259,18 +265,33 @@ const WelcomeText = styled.div`
   margin-bottom: 15px;
   
   h1 {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 700;
-    margin-bottom: 6px;
-    background: linear-gradient(90deg, #1976D2, #64B5F6);
+    margin-bottom: 8px;
+    background: linear-gradient(135deg, #1976D2, #64B5F6, #42A5F5);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
     display: inline-block;
+    position: relative;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, #1976D2, transparent);
+      border-radius: 2px;
+    }
   }
   
   p {
     color: #666;
-    font-size: 13px;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.8;
   }
   
   @media (min-width: 768px) {
@@ -278,11 +299,12 @@ const WelcomeText = styled.div`
     margin-bottom: 0;
     
     h1 {
-      font-size: 24px;
+      font-size: 26px;
+      margin-bottom: 6px;
     }
     
     p {
-      font-size: 14px;
+      font-size: 15px;
     }
   }
 `;
@@ -291,20 +313,38 @@ const LogoutButton = styled(motion.button)`
   background: linear-gradient(135deg, #FF6B9D 0%, #C44569 100%);
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 10px 20px;
+  border-radius: 12px;
   font-weight: 600;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   transition: all 0.3s ease;
-  font-size: 13px;
-  box-shadow: 0 4px 12px rgba(196, 69, 105, 0.2);
+  font-size: 14px;
+  box-shadow: 0 4px 16px rgba(196, 69, 105, 0.3);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(255, 107, 157, 0.3);
+    box-shadow: 0 8px 24px rgba(255, 107, 157, 0.4);
+    background: linear-gradient(135deg, #FF8FA3 0%, #D63384 100%);
+    
+    &::before {
+      left: 100%;
+    }
   }
   
   &:active {
@@ -313,77 +353,107 @@ const LogoutButton = styled(motion.button)`
   }
   
   @media (min-width: 768px) {
-    padding: 10px 20px;
-    font-size: 14px;
-    gap: 8px;
+    padding: 12px 24px;
+    font-size: 15px;
+    gap: 10px;
   }
   
   @media (min-width: 992px) {
-    padding: 12px 24px;
-    font-size: 15px;
+    padding: 14px 28px;
+    font-size: 16px;
   }
 `;
 
 const ContentGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 20px;
+  margin-bottom: 32px;
   overflow-x: hidden;
   position: relative;
   width: 100%;
   
   @media (min-width: 576px) {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-  }
-  
-  @media (min-width: 768px) {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 24px;
   }
   
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 28px;
+  }
+  
   @media (min-width: 992px) {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 32px;
   }
 `;
 
 const Card = styled(motion.div)`
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-  padding: 20px;
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #1976D2, #64B5F6, #42A5F5);
+    border-radius: 16px 16px 0 0;
+  }
   
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    
+    &::before {
+      background: linear-gradient(90deg, #FFD700, #FFA500, #FF8C00);
+    }
   }
   
   h3 {
-    color: #333;
-    font-size: 17px;
-    font-weight: 600;
-    margin-bottom: 14px;
+    color: #1a202c;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    position: relative;
     
     svg {
       color: #1976D2;
+      padding: 8px;
+      background: rgba(25, 118, 210, 0.1);
+      border-radius: 8px;
+      font-size: 20px;
+      transition: all 0.3s ease;
     }
   }
   
   p {
-    color: #666;
-    line-height: 1.6;
-    font-size: 14px;
+    color: #4a5568;
+    line-height: 1.7;
+    font-size: 15px;
+    font-weight: 400;
+  }
+  
+  &:hover h3 svg {
+    background: rgba(255, 215, 0, 0.2);
+    color: #FF8C00;
+    transform: scale(1.1);
   }
   
   @media (min-width: 768px) {
-    padding: 25px;
+    padding: 28px;
     
     h3 {
       font-size: 18px;
@@ -442,47 +512,50 @@ const Dashboard = ({ children }) => {
 
         <ContentGrid>
           <Card
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            initial={{ opacity: 0, y: 30, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.1, type: "spring", stiffness: 100 }}
+            whileHover={{ y: -8, transition: { duration: 0.2 } }}
           >
             <h3>
               <FiHome />
               Dashboard Overview
             </h3>
             <p>
-              Welcome to your admin dashboard! This is a demo implementation of the login screen you requested. 
-              The authentication system is now working with Redux state management.
+              Welcome to your modern admin dashboard! Manage your content with ease using our intuitive interface. 
+              Track analytics, manage users, and control every aspect of your platform from this central hub.
             </p>
           </Card>
 
           <Card
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            initial={{ opacity: 0, y: 30, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 100 }}
+            whileHover={{ y: -8, transition: { duration: 0.2 } }}
           >
             <h3>
               <FiUser />
-              User Profile
+              User Management
             </h3>
             <p>
-              Your profile information and account settings. The selected theme from the login page 
-              is preserved and can be used throughout the application.
+              Efficiently manage user accounts, permissions, and access levels. Monitor user activity, 
+              update profiles, and ensure security compliance across your platform.
             </p>
           </Card>
 
           <Card
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            initial={{ opacity: 0, y: 30, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.3, type: "spring", stiffness: 100 }}
+            whileHover={{ y: -8, transition: { duration: 0.2 } }}
           >
             <h3>
               <FiSettings />
-              Settings
+              System Settings
             </h3>
             <p>
-              Configure your application preferences, theme settings, and other administrative options.
-              The current theme selection is: {selectedTheme === 'golden' ? 'Golden' : 'Emerald'}.
+              Configure your application preferences, manage themes, and customize your admin experience. 
+              Current theme: {selectedTheme === 'golden' ? 'Golden Luxury' : 'Emerald Professional'} mode.
             </p>
           </Card>
         </ContentGrid>
