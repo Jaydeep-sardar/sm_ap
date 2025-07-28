@@ -12,15 +12,25 @@ import { HiOutlineTag } from 'react-icons/hi';
 const DashboardContainer = styled.div`
   min-height: 100vh;
   background: ${props => props.theme === 'golden' 
-    ? 'linear-gradient(135deg, #fffbeb 0%, #fef3c7 25%, #fde68a 50%, #f3e8ff 75%, #e0e7ff 100%)'
-    : 'linear-gradient(135deg, #ecfdf5 0%, #d1fae5 25%, #a7f3d0 50%, #f0f9ff 75%, #dbeafe 100%)'};
+    ? `
+      linear-gradient(135deg, #fffdf7 0%, #fefce8 15%, #fef3c7 35%, #fed7aa 55%, #fecaca 75%, #fef3c7 100%),
+      radial-gradient(ellipse at top, rgba(255, 215, 0, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(255, 140, 0, 0.1) 0%, transparent 50%)
+    `
+    : `
+      linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 15%, #d1fae5 35%, #a7f3d0 55%, #6ee7b7 75%, #ecfdf5 100%),
+      radial-gradient(ellipse at top, rgba(16, 185, 129, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse at bottom, rgba(5, 150, 105, 0.1) 0%, transparent 50%)
+    `};
+  background-attachment: fixed;
+  background-size: 100% 100%, 120% 120%, 150% 150%;
   padding: 0;
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
   position: relative;
   
-  /* Add elegant animated background patterns */
+  /* Add sophisticated animated background patterns */
   &::before {
     content: '';
     position: fixed;
@@ -30,25 +40,82 @@ const DashboardContainer = styled.div`
     bottom: 0;
     background: ${props => props.theme === 'golden' 
       ? `
-        radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 140, 0, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 80%, rgba(255, 165, 0, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 60% 30%, rgba(255, 193, 7, 0.05) 0%, transparent 50%)
+        radial-gradient(circle at 15% 20%, rgba(255, 215, 0, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(255, 140, 0, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 45% 70%, rgba(255, 165, 0, 0.05) 0%, transparent 35%),
+        radial-gradient(circle at 75% 80%, rgba(218, 165, 32, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 25% 90%, rgba(255, 193, 7, 0.03) 0%, transparent 40%),
+        linear-gradient(45deg, transparent 40%, rgba(255, 215, 0, 0.02) 50%, transparent 60%)
       `
       : `
-        radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(5, 150, 105, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 80%, rgba(4, 120, 87, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 60% 30%, rgba(6, 78, 59, 0.05) 0%, transparent 50%)
+        radial-gradient(circle at 15% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 30%, rgba(5, 150, 105, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 45% 70%, rgba(4, 120, 87, 0.05) 0%, transparent 35%),
+        radial-gradient(circle at 75% 80%, rgba(6, 95, 70, 0.04) 0%, transparent 50%),
+        radial-gradient(circle at 25% 90%, rgba(6, 78, 59, 0.03) 0%, transparent 40%),
+        linear-gradient(45deg, transparent 40%, rgba(16, 185, 129, 0.02) 50%, transparent 60%)
       `};
-    animation: backgroundShift 20s ease-in-out infinite;
+    background-size: 300px 300px, 400px 400px, 250px 250px, 350px 350px, 280px 280px, 200px 200px;
+    animation: backgroundShift 30s ease-in-out infinite;
     pointer-events: none;
     z-index: 0;
   }
   
+  /* Add floating particles effect */
+  &::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: ${props => props.theme === 'golden' 
+      ? `
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 215, 0, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 165, 0, 0.2), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 140, 0, 0.4), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(218, 165, 32, 0.3), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(255, 193, 7, 0.2), transparent)
+      `
+      : `
+        radial-gradient(2px 2px at 20px 30px, rgba(16, 185, 129, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(5, 150, 105, 0.2), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(4, 120, 87, 0.4), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(6, 95, 70, 0.3), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(6, 78, 59, 0.2), transparent)
+      `};
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: particleFloat 40s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.6;
+  }
+  
   @keyframes backgroundShift {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.1); }
+    0%, 100% { 
+      opacity: 1; 
+      transform: scale(1) rotate(0deg); 
+    }
+    25% { 
+      opacity: 0.8; 
+      transform: scale(1.05) rotate(0.5deg); 
+    }
+    50% { 
+      opacity: 0.9; 
+      transform: scale(1.1) rotate(-0.3deg); 
+    }
+    75% { 
+      opacity: 0.7; 
+      transform: scale(1.03) rotate(0.2deg); 
+    }
+  }
+  
+  @keyframes particleFloat {
+    0% { transform: translateY(0px) translateX(0px); }
+    33% { transform: translateY(-10px) translateX(5px); }
+    66% { transform: translateY(5px) translateX(-3px); }
+    100% { transform: translateY(0px) translateX(0px); }
   }
   
   @media (min-width: 768px) {
@@ -289,24 +356,42 @@ const MainContent = styled.div`
   flex-direction: column;
   background: ${props => props.theme === 'golden' 
     ? `
-      linear-gradient(135deg, #fefdf8 0%, #fef7e3 25%, #fef3c7 50%, #ffffff 100%),
-      linear-gradient(45deg, rgba(255, 215, 0, 0.03) 0%, transparent 25%, rgba(255, 165, 0, 0.02) 50%, transparent 75%)
+      linear-gradient(135deg, 
+        rgba(255, 253, 245, 0.95) 0%, 
+        rgba(254, 252, 232, 0.9) 20%, 
+        rgba(255, 251, 235, 0.85) 40%, 
+        rgba(255, 255, 255, 0.9) 60%, 
+        rgba(254, 252, 232, 0.95) 80%, 
+        rgba(255, 253, 245, 0.9) 100%
+      ),
+      radial-gradient(ellipse 800px 600px at 50% 0%, rgba(255, 215, 0, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse 600px 400px at 0% 100%, rgba(255, 165, 0, 0.06) 0%, transparent 40%)
     `
     : `
-      linear-gradient(135deg, #f0fdf9 0%, #e6fffa 25%, #ccfbf1 50%, #ffffff 100%),
-      linear-gradient(45deg, rgba(16, 185, 129, 0.03) 0%, transparent 25%, rgba(5, 150, 105, 0.02) 50%, transparent 75%)
+      linear-gradient(135deg, 
+        rgba(240, 253, 249, 0.95) 0%, 
+        rgba(236, 253, 245, 0.9) 20%, 
+        rgba(209, 250, 229, 0.85) 40%, 
+        rgba(255, 255, 255, 0.9) 60%, 
+        rgba(236, 253, 245, 0.95) 80%, 
+        rgba(240, 253, 249, 0.9) 100%
+      ),
+      radial-gradient(ellipse 800px 600px at 50% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse 600px 400px at 0% 100%, rgba(5, 150, 105, 0.06) 0%, transparent 40%)
     `};
-  background-blend-mode: multiply, normal;
+  background-blend-mode: multiply, overlay, soft-light;
+  background-attachment: local;
   border-radius: 0;
-  padding: 20px;
+  padding: 25px;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   min-height: 100vh;
   position: relative;
-  margin-top: 60px; /* Account for fixed navbar on mobile */
+  margin-top: 60px;
   z-index: 1;
+  backdrop-filter: blur(10px);
   
-  /* Add elegant texture overlay */
+  /* Add sophisticated texture overlay */
   &::before {
     content: '';
     position: absolute;
@@ -316,52 +401,106 @@ const MainContent = styled.div`
     bottom: 0;
     background-image: ${props => props.theme === 'golden' 
       ? `
-        radial-gradient(circle at 2px 2px, rgba(255, 215, 0, 0.1) 1px, transparent 0),
-        linear-gradient(45deg, transparent 40%, rgba(255, 165, 0, 0.02) 50%, transparent 60%)
+        radial-gradient(circle at 3px 3px, rgba(255, 215, 0, 0.15) 2px, transparent 0),
+        radial-gradient(circle at 15px 15px, rgba(255, 165, 0, 0.08) 1px, transparent 0),
+        linear-gradient(135deg, transparent 30%, rgba(255, 140, 0, 0.03) 50%, transparent 70%),
+        linear-gradient(45deg, rgba(218, 165, 32, 0.02) 25%, transparent 25%, transparent 75%, rgba(255, 193, 7, 0.02) 75%)
       `
       : `
-        radial-gradient(circle at 2px 2px, rgba(16, 185, 129, 0.1) 1px, transparent 0),
-        linear-gradient(45deg, transparent 40%, rgba(5, 150, 105, 0.02) 50%, transparent 60%)
+        radial-gradient(circle at 3px 3px, rgba(16, 185, 129, 0.15) 2px, transparent 0),
+        radial-gradient(circle at 15px 15px, rgba(5, 150, 105, 0.08) 1px, transparent 0),
+        linear-gradient(135deg, transparent 30%, rgba(4, 120, 87, 0.03) 50%, transparent 70%),
+        linear-gradient(45deg, rgba(6, 95, 70, 0.02) 25%, transparent 25%, transparent 75%, rgba(6, 78, 59, 0.02) 75%)
       `};
-    background-size: 20px 20px, 200px 200px;
-    animation: textureFloat 25s linear infinite;
+    background-size: 25px 25px, 30px 30px, 300px 300px, 50px 50px;
+    animation: textureFloat 35s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.7;
+  }
+  
+  /* Add glass morphism effect */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: ${props => props.theme === 'golden' 
+      ? `
+        linear-gradient(135deg, 
+          rgba(255, 255, 255, 0.1) 0%, 
+          rgba(255, 252, 235, 0.05) 25%, 
+          rgba(255, 255, 255, 0.08) 50%, 
+          rgba(254, 250, 224, 0.06) 75%, 
+          rgba(255, 255, 255, 0.1) 100%
+        )
+      `
+      : `
+        linear-gradient(135deg, 
+          rgba(255, 255, 255, 0.1) 0%, 
+          rgba(240, 253, 249, 0.05) 25%, 
+          rgba(255, 255, 255, 0.08) 50%, 
+          rgba(236, 253, 245, 0.06) 75%, 
+          rgba(255, 255, 255, 0.1) 100%
+        )
+      `};
+    backdrop-filter: blur(2px);
+    border-radius: 0;
     pointer-events: none;
     z-index: -1;
   }
   
   @keyframes textureFloat {
-    0% { transform: translate(0, 0); }
-    25% { transform: translate(-10px, -5px); }
-    50% { transform: translate(5px, -10px); }
-    75% { transform: translate(-5px, 5px); }
-    100% { transform: translate(0, 0); }
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-2px, -3px) rotate(0.5deg); }
+    50% { transform: translate(3px, -2px) rotate(-0.3deg); }
+    75% { transform: translate(-1px, 2px) rotate(0.2deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
   }
   
-  /* Customize scrollbar */
+  /* Enhanced scrollbar */
   &::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
   }
   
   &::-webkit-scrollbar-track {
     background: ${props => props.theme === 'golden' 
-      ? 'rgba(255, 215, 0, 0.1)' 
-      : 'rgba(16, 185, 129, 0.1)'};
-    border-radius: 4px;
+      ? 'linear-gradient(180deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 165, 0, 0.05) 100%)' 
+      : 'linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, rgba(5, 150, 105, 0.05) 100%)'};
+    border-radius: 5px;
+    border: ${props => props.theme === 'golden' 
+      ? '1px solid rgba(255, 215, 0, 0.1)' 
+      : '1px solid rgba(16, 185, 129, 0.1)'};
   }
   
   &::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, #cbd5e1, #94a3b8);
-    border-radius: 4px;
+    background: ${props => props.theme === 'golden' 
+      ? 'linear-gradient(180deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%)' 
+      : 'linear-gradient(180deg, #10B981 0%, #059669 50%, #047857 100%)'};
+    border-radius: 5px;
+    border: ${props => props.theme === 'golden' 
+      ? '2px solid rgba(255, 215, 0, 0.2)' 
+      : '2px solid rgba(16, 185, 129, 0.2)'};
+    box-shadow: ${props => props.theme === 'golden' 
+      ? '0 2px 8px rgba(255, 165, 0, 0.3)' 
+      : '0 2px 8px rgba(16, 185, 129, 0.3)'};
     
     &:hover {
-      background: linear-gradient(135deg, #94a3b8, #64748b);
+      background: ${props => props.theme === 'golden' 
+        ? 'linear-gradient(180deg, #FFED4E 0%, #FFB800 50%, #FF7F00 100%)' 
+        : 'linear-gradient(180deg, #34D399 0%, #10B981 50%, #065F46 100%)'};
+      box-shadow: ${props => props.theme === 'golden' 
+        ? '0 4px 12px rgba(255, 165, 0, 0.4)' 
+        : '0 4px 12px rgba(16, 185, 129, 0.4)'};
     }
   }
   
   @media (min-width: 768px) {
-    padding: 24px;
-    margin-left: 260px; /* Account for fixed sidebar */
+    padding: 30px;
+    margin-left: 260px;
     margin-top: 0;
     min-height: 100vh;
   }
@@ -370,40 +509,77 @@ const MainContent = styled.div`
 const Header = styled.div`
   background: ${props => props.theme === 'golden' 
     ? `
-      linear-gradient(135deg, rgba(255, 248, 220, 0.95) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(254, 252, 232, 0.95) 100%)
+      linear-gradient(135deg, 
+        rgba(255, 253, 245, 0.98) 0%, 
+        rgba(254, 251, 224, 0.95) 15%, 
+        rgba(255, 255, 255, 0.92) 30%, 
+        rgba(254, 250, 224, 0.95) 50%, 
+        rgba(255, 252, 235, 0.96) 70%, 
+        rgba(255, 253, 245, 0.98) 100%
+      )
     `
     : `
-      linear-gradient(135deg, rgba(236, 253, 245, 0.95) 0%, rgba(255, 255, 255, 0.9) 50%, rgba(240, 253, 249, 0.95) 100%)
+      linear-gradient(135deg, 
+        rgba(240, 253, 249, 0.98) 0%, 
+        rgba(225, 253, 238, 0.95) 15%, 
+        rgba(255, 255, 255, 0.92) 30%, 
+        rgba(209, 250, 229, 0.95) 50%, 
+        rgba(167, 243, 208, 0.96) 70%, 
+        rgba(240, 253, 249, 0.98) 100%
+      )
     `};
-  border-radius: 20px;
-  padding: 25px;
-  margin-bottom: 28px;
+  border-radius: 24px;
+  padding: 30px;
+  margin-bottom: 32px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: ${props => props.theme === 'golden' 
-    ? '2px solid rgba(255, 215, 0, 0.2)' 
-    : '2px solid rgba(16, 185, 129, 0.2)'};
+    ? '3px solid rgba(255, 215, 0, 0.25)' 
+    : '3px solid rgba(16, 185, 129, 0.25)'};
   box-shadow: ${props => props.theme === 'golden' 
-    ? '0 8px 32px rgba(255, 165, 0, 0.1), 0 0 40px rgba(255, 215, 0, 0.05)' 
-    : '0 8px 32px rgba(16, 185, 129, 0.1), 0 0 40px rgba(5, 150, 105, 0.05)'};
+    ? `
+      0 12px 40px rgba(255, 165, 0, 0.15), 
+      0 0 60px rgba(255, 215, 0, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      inset 0 -1px 0 rgba(255, 215, 0, 0.1)
+    ` 
+    : `
+      0 12px 40px rgba(16, 185, 129, 0.15), 
+      0 0 60px rgba(5, 150, 105, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3),
+      inset 0 -1px 0 rgba(16, 185, 129, 0.1)
+    `};
   position: sticky;
-  top: 10px;
+  top: 15px;
   z-index: 10;
-  backdrop-filter: blur(25px);
+  backdrop-filter: blur(30px);
   
   /* Add elegant hover effect */
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   
   &:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px) scale(1.01);
     box-shadow: ${props => props.theme === 'golden' 
-      ? '0 12px 40px rgba(255, 165, 0, 0.15), 0 0 60px rgba(255, 215, 0, 0.08)' 
-      : '0 12px 40px rgba(16, 185, 129, 0.15), 0 0 60px rgba(5, 150, 105, 0.08)'};
+      ? `
+        0 16px 50px rgba(255, 165, 0, 0.2), 
+        0 0 80px rgba(255, 215, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 0 rgba(255, 215, 0, 0.15)
+      ` 
+      : `
+        0 16px 50px rgba(16, 185, 129, 0.2), 
+        0 0 80px rgba(5, 150, 105, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),
+        inset 0 -1px 0 rgba(16, 185, 129, 0.15)
+      `};
+    border-color: ${props => props.theme === 'golden' 
+      ? 'rgba(255, 215, 0, 0.4)' 
+      : 'rgba(16, 185, 129, 0.4)'};
   }
   
-  /* Add subtle pattern */
+  /* Add sophisticated pattern */
   &::before {
     content: '';
     position: absolute;
@@ -412,19 +588,36 @@ const Header = styled.div`
     right: 0;
     bottom: 0;
     background: ${props => props.theme === 'golden' 
-      ? 'linear-gradient(45deg, transparent 48%, rgba(255, 215, 0, 0.02) 50%, transparent 52%)' 
-      : 'linear-gradient(45deg, transparent 48%, rgba(16, 185, 129, 0.02) 50%, transparent 52%)'};
-    background-size: 20px 20px;
-    border-radius: 20px;
+      ? `
+        radial-gradient(circle at 10% 20%, rgba(255, 215, 0, 0.08) 0%, transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(255, 165, 0, 0.06) 0%, transparent 25%),
+        linear-gradient(135deg, transparent 45%, rgba(218, 165, 32, 0.03) 50%, transparent 55%)
+      ` 
+      : `
+        radial-gradient(circle at 10% 20%, rgba(16, 185, 129, 0.08) 0%, transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(5, 150, 105, 0.06) 0%, transparent 25%),
+        linear-gradient(135deg, transparent 45%, rgba(4, 120, 87, 0.03) 50%, transparent 55%)
+      `};
+    background-size: 300px 300px, 250px 250px, 400px 400px;
+    border-radius: 24px;
     pointer-events: none;
+    animation: headerPattern 25s linear infinite;
+  }
+  
+  @keyframes headerPattern {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(-5px, -2px) rotate(0.5deg); }
+    50% { transform: translate(3px, -3px) rotate(-0.3deg); }
+    75% { transform: translate(-2px, 2px) rotate(0.2deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
   }
   
   @media (min-width: 768px) {
-    padding: 30px 40px;
-    margin-bottom: 35px;
+    padding: 35px 45px;
+    margin-bottom: 40px;
     flex-direction: row;
     justify-content: space-between;
-    border-radius: 24px;
+    border-radius: 28px;
   }
 `;
 
@@ -584,46 +777,64 @@ const Card = styled(motion.div)`
   background: ${props => props.theme === 'golden' 
     ? `
       linear-gradient(135deg, 
-        rgba(255, 253, 245, 0.95) 0%, 
-        rgba(255, 255, 255, 0.9) 30%, 
-        rgba(254, 252, 232, 0.95) 100%
+        rgba(255, 253, 245, 0.98) 0%, 
+        rgba(254, 252, 232, 0.95) 20%, 
+        rgba(255, 255, 255, 0.92) 40%, 
+        rgba(254, 250, 224, 0.95) 60%, 
+        rgba(255, 252, 235, 0.98) 80%, 
+        rgba(255, 253, 245, 0.95) 100%
       )
     `
     : `
       linear-gradient(135deg, 
-        rgba(240, 253, 249, 0.95) 0%, 
-        rgba(255, 255, 255, 0.9) 30%, 
-        rgba(236, 253, 245, 0.95) 100%
+        rgba(240, 253, 249, 0.98) 0%, 
+        rgba(236, 253, 245, 0.95) 20%, 
+        rgba(255, 255, 255, 0.92) 40%, 
+        rgba(209, 250, 229, 0.95) 60%, 
+        rgba(167, 243, 208, 0.98) 80%, 
+        rgba(240, 253, 249, 0.95) 100%
       )
     `};
-  border-radius: 20px;
+  border-radius: 24px;
   box-shadow: ${props => props.theme === 'golden' 
-    ? '0 8px 32px rgba(255, 165, 0, 0.1), 0 0 40px rgba(255, 215, 0, 0.05)' 
-    : '0 8px 32px rgba(16, 185, 129, 0.1), 0 0 40px rgba(5, 150, 105, 0.05)'};
-  padding: 28px;
+    ? `
+      0 8px 32px rgba(255, 165, 0, 0.12), 
+      0 0 40px rgba(255, 215, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 -1px 0 rgba(255, 215, 0, 0.1)
+    ` 
+    : `
+      0 8px 32px rgba(16, 185, 129, 0.12), 
+      0 0 40px rgba(5, 150, 105, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2),
+      inset 0 -1px 0 rgba(16, 185, 129, 0.1)
+    `};
+  padding: 32px;
   border: ${props => props.theme === 'golden' 
-    ? '2px solid rgba(255, 215, 0, 0.15)' 
-    : '2px solid rgba(16, 185, 129, 0.15)'};
+    ? '2px solid rgba(255, 215, 0, 0.2)' 
+    : '2px solid rgba(16, 185, 129, 0.2)'};
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(25px);
   
-  /* Elegant top accent */
+  /* Elegant top accent with gradient */
   &::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
+    height: 5px;
     background: ${props => props.theme === 'golden' 
-      ? 'linear-gradient(90deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%)' 
-      : 'linear-gradient(90deg, #10B981 0%, #059669 50%, #047857 100%)'};
-    border-radius: 20px 20px 0 0;
+      ? 'linear-gradient(90deg, #FFD700 0%, #FFA500 25%, #FF8C00 50%, #DAA520 75%, #FFD700 100%)' 
+      : 'linear-gradient(90deg, #10B981 0%, #059669 25%, #047857 50%, #065f46 75%, #10B981 100%)'};
+    background-size: 200% 100%;
+    border-radius: 24px 24px 0 0;
+    animation: gradientShift 3s ease-in-out infinite;
   }
   
-  /* Subtle pattern overlay */
+  /* Sophisticated pattern overlay */
   &::after {
     content: '';
     position: absolute;
@@ -633,78 +844,111 @@ const Card = styled(motion.div)`
     bottom: 0;
     background: ${props => props.theme === 'golden' 
       ? `
-        radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.02) 0%, transparent 50%)
+        radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(255, 165, 0, 0.04) 0%, transparent 35%),
+        radial-gradient(circle at 40% 60%, rgba(218, 165, 32, 0.03) 0%, transparent 25%),
+        linear-gradient(135deg, transparent 40%, rgba(255, 193, 7, 0.02) 50%, transparent 60%)
       `
       : `
-        radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(5, 150, 105, 0.02) 0%, transparent 50%)
+        radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(5, 150, 105, 0.04) 0%, transparent 35%),
+        radial-gradient(circle at 40% 60%, rgba(4, 120, 87, 0.03) 0%, transparent 25%),
+        linear-gradient(135deg, transparent 40%, rgba(6, 78, 59, 0.02) 50%, transparent 60%)
       `};
-    border-radius: 20px;
+    border-radius: 24px;
     pointer-events: none;
   }
   
+  @keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  
   &:hover {
-    transform: translateY(-6px) scale(1.03);
+    transform: translateY(-8px) scale(1.03);
     box-shadow: ${props => props.theme === 'golden' 
-      ? '0 16px 48px rgba(255, 165, 0, 0.15), 0 0 60px rgba(255, 215, 0, 0.08)' 
-      : '0 16px 48px rgba(16, 185, 129, 0.15), 0 0 60px rgba(5, 150, 105, 0.08)'};
+      ? `
+        0 20px 60px rgba(255, 165, 0, 0.18), 
+        0 0 80px rgba(255, 215, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -1px 0 rgba(255, 215, 0, 0.15)
+      ` 
+      : `
+        0 20px 60px rgba(16, 185, 129, 0.18), 
+        0 0 80px rgba(5, 150, 105, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3),
+        inset 0 -1px 0 rgba(16, 185, 129, 0.15)
+      `};
     border-color: ${props => props.theme === 'golden' 
-      ? 'rgba(255, 215, 0, 0.3)' 
-      : 'rgba(16, 185, 129, 0.3)'};
+      ? 'rgba(255, 215, 0, 0.4)' 
+      : 'rgba(16, 185, 129, 0.4)'};
     
     &::before {
-      height: 6px;
-      background: ${props => props.theme === 'golden' 
-        ? 'linear-gradient(90deg, #FFD700 0%, #FFA500 30%, #FF8C00 60%, #FFD700 100%)' 
-        : 'linear-gradient(90deg, #10B981 0%, #059669 30%, #047857 60%, #10B981 100%)'};
-      animation: shimmerTop 2s ease-in-out infinite;
+      height: 7px;
+      animation-duration: 2s;
     }
   }
   
-  @keyframes shimmerTop {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
-  }
-  
   h3 {
-    color: #1a202c;
-    font-size: 20px;
+    color: ${props => props.theme === 'golden' 
+      ? '#B8860B' 
+      : '#064e3b'};
+    font-size: 22px;
     font-weight: 700;
-    margin-bottom: 16px;
+    margin-bottom: 18px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     position: relative;
+    z-index: 1;
     
     svg {
-      color: #1976D2;
-      padding: 8px;
-      background: rgba(25, 118, 210, 0.1);
-      border-radius: 8px;
-      font-size: 20px;
-      transition: all 0.3s ease;
+      color: ${props => props.theme === 'golden' 
+        ? '#DAA520' 
+        : '#10B981'};
+      padding: 10px;
+      background: ${props => props.theme === 'golden' 
+        ? 'linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.1) 100%)' 
+        : 'linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(5, 150, 105, 0.1) 100%)'};
+      border-radius: 12px;
+      font-size: 22px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: ${props => props.theme === 'golden' 
+        ? '1px solid rgba(255, 215, 0, 0.2)' 
+        : '1px solid rgba(16, 185, 129, 0.2)'};
     }
   }
   
   p {
-    color: #4a5568;
-    line-height: 1.7;
-    font-size: 15px;
+    color: ${props => props.theme === 'golden' 
+      ? '#8B7355' 
+      : '#065f46'};
+    line-height: 1.8;
+    font-size: 16px;
     font-weight: 400;
+    position: relative;
+    z-index: 1;
+    opacity: 0.9;
   }
   
   &:hover h3 svg {
-    background: rgba(255, 215, 0, 0.2);
-    color: #FF8C00;
-    transform: scale(1.1);
+    background: ${props => props.theme === 'golden' 
+      ? 'linear-gradient(135deg, rgba(255, 215, 0, 0.25) 0%, rgba(255, 140, 0, 0.2) 100%)' 
+      : 'linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(5, 150, 105, 0.2) 100%)'};
+    color: ${props => props.theme === 'golden' 
+      ? '#FF8C00' 
+      : '#047857'};
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: ${props => props.theme === 'golden' 
+      ? '0 4px 12px rgba(255, 165, 0, 0.3)' 
+      : '0 4px 12px rgba(16, 185, 129, 0.3)'};
   }
   
   @media (min-width: 768px) {
-    padding: 28px;
+    padding: 30px;
     
     h3 {
-      font-size: 18px;
+      font-size: 20px;
       margin-bottom: 16px;
       gap: 12px;
     }
@@ -715,7 +959,7 @@ const Card = styled(motion.div)`
   }
   
   @media (min-width: 992px) {
-    padding: 32px;
+    padding: 34px;
   }
 `;
 
