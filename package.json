@@ -13,20 +13,12 @@
     "framer-motion": "^10.16.4",
     "react-icons": "^4.11.0"
   },
-  "devDependencies": {
-    "concurrently": "^8.2.2"
-  },
   "scripts": {
     "start": "react-scripts start",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "backend": "cd backend && npm start",
-    "backend:dev": "cd backend && npm run dev",
-    "backend:install": "cd backend && npm install",
-    "full:dev": "concurrently \"npm run backend:dev\" \"npm run dev\"",
-    "setup": "npm install && npm run backend:install"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
