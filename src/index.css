@@ -102,6 +102,12 @@ html, body, div, main, section, article {
   perspective: 1000;
 }
 
+/* Spinner animation for loading states */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* Responsive images and media */
 img, video, iframe {
   max-width: 100%;

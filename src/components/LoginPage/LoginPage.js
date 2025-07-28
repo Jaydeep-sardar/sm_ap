@@ -53,12 +53,25 @@ const LoginPage = () => {
     // Validate credentials
     setTimeout(() => {
       if (formData.email === "admin@yenumax.com" && formData.password === "maxYenu@1847") {
-        dispatch(loginSuccess({ user: { name: "Admin", email: formData.email } }));
+        const userData = { 
+          name: "Admin", 
+          email: formData.email,
+          role: "administrator",
+          loginTime: new Date().toISOString()
+        };
+        dispatch(loginSuccess({ 
+          user: userData, 
+          rememberMe: false // Always use session-based auth for better incognito support
+        }));
+        
+        // Trigger custom event for session storage change
+        window.dispatchEvent(new Event('sessionStorageChange'));
+        
         navigate('/contents');
       } else if (!formData.email || !formData.password) {
         dispatch(loginFailure('Please fill in all fields'));
       } else {
-        dispatch(loginFailure('Invalid email or password'));
+        dispatch(loginFailure('Invalid email or password. Please check your credentials.'));
       }
     }, 1000);
   };

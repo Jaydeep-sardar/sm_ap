@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, NavLink, useLocation } from 'react-router-dom';
-import { logout } from '../../store/authSlice';
+import { logout, refreshToken } from '../../store/authSlice';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 // Import Feather icons
@@ -1148,17 +1148,48 @@ const Dashboard = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { user } = useSelector((state) => state.auth);
+  const { user, token, tokenExpiry } = useSelector((state) => state.auth);
   const { currentTheme } = useSelector((state) => state.theme);
   const [menuOpen, setMenuOpen] = React.useState(false);
+
+  // Handle token refresh when needed
+  React.useEffect(() => {
+    if (token && tokenExpiry) {
+      const timeUntilExpiry = tokenExpiry - Date.now();
+      const refreshThreshold = 30 * 60 * 1000; // 30 minutes
+      
+      if (timeUntilExpiry < refreshThreshold && timeUntilExpiry > 0) {
+        // Token will expire soon, refresh it
+        dispatch(refreshToken());
+      }
+      
+      // Set up automatic token refresh
+      const refreshInterval = setInterval(() => {
+        const currentTime = Date.now();
+        const timeLeft = tokenExpiry - currentTime;
+        
+        if (timeLeft < refreshThreshold && timeLeft > 0) {
+          dispatch(refreshToken());
+        }
+      }, 15 * 60 * 1000); // Check every 15 minutes
+      
+      return () => clearInterval(refreshInterval);
+    }
+  }, [token, tokenExpiry, dispatch]);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
 
   const handleLogout = () => {
+    // Clear any ongoing intervals or timeouts
     dispatch(logout());
-    navigate('/');
+    
+    // Trigger custom event for session storage change
+    window.dispatchEvent(new Event('sessionStorageChange'));
+    
+    // Navigate to login page
+    navigate('/', { replace: true });
   };
 
   const renderDashboardContent = () => {
